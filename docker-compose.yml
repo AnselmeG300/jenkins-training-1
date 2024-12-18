@@ -1,21 +1,17 @@
-version: '2'
+version: '4'
 services:
   jenkins:
-    # image: 'bitnami/jenkins:2'
-    # image: dirane/jenkins-docker-ansible-clair
-    image: eazytraining/jenkins
-    ports:
-      - '8080:8080'
-      - '443:8443'
-      - '50000:50000'
     privileged: true
+    user: root
+    container_name: jenkins-launch
+    image: jenkins/jenkins:2.490-jdk17
     restart: always
+    ports:
+      - 8080:8080
+      - 50000:50000
     volumes:
-      - 'jenkins_data:/bitnami'
-      - '/var/run/docker.sock:/var/run/docker.sock'
-      - 'jenkins_home:/var/jenkins_home'
+      - <path_daemon_docker>:/usr/bin/docker
+      - jenkins_launch:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock      
 volumes:
-  jenkins_data:
-    driver: local
-  jenkins_home:
-    driver: local
+ jenkins_launch:
